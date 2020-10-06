@@ -1,4 +1,4 @@
-#CVEInfo
+# CVEInfo
 
 A tool to get basic info about a CVE from the command line
 
