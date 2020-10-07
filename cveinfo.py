@@ -21,6 +21,11 @@ url = 'https://cve.circl.lu/api/cve/CVE-' + cve
 response = requests.get(url)
 data = response.json()
 
+#Check for result
+if data is None:
+    print("No results found for CVE. Exiting.")
+    exit(1)
+
 #Get data
 cvid = data['id']
 modified = data['Modified']
@@ -28,9 +33,6 @@ published = data['Published']
 cvss = data['cvss']
 rel_cwe = data['cwe']
 impact = data['impact']
-impact_availability = data['impact']['availability']
-impact_confidentiality = data['impact']['confidentiality']
-impact_integrity = data['impact']['integrity']
 references = data['references']
 summary = data['summary']
 vulnerable = data['vulnerable_product']
@@ -51,7 +53,6 @@ for product in vulnerable:
 
 #Get CWE
 if args.cwe:
-    cwe = args.cwe
     #rel_cwe.removeprefix('CWE-') Python 3.9+, wait to implement until Python 3.9 is more widely adopted
     rel_cwe = rel_cwe[4:]
     cweurl = 'https://cve.circl.lu/api/capec/'+rel_cwe
